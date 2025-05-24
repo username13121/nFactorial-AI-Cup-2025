@@ -1,0 +1,6 @@
+rnet==2.2.9
+selenium-driverless==1.9.4
+fastapi==0.115.12
+langchain-core==0.3.61
+langchain==0.3.25
+langchain-openai==0.3.18
