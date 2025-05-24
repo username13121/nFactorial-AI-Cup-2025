@@ -117,7 +117,12 @@ async def get_hotels_for_city(city_code: int, city_name: str, check_in_date: str
 
         total_price = hotel["hotelBasicInfo"]["priceExplanation"]
 
-        total_price = re.search(r'\$\d+', total_price).group(0)
+        total_price = re.search(r'\$\d+', total_price)
+
+        if total_price is None:
+            total_price = "unavailable"
+        else:
+            total_price = total_price.group(0)
 
         advantages = []
         if hotel.get("roomTags", {}).get("advantageTags") is not None:
