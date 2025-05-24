@@ -22,8 +22,8 @@ class RnetManager:
                 )
             ]
 
-        self.rnet_client = rnet.Client(impersonate=random.choice(tools.rnet_impersonations), **rnet_init_kwargs)
+        self.rnet_client = rnet.Client(impersonate=random.choice(utils.rnet_impersonations), **rnet_init_kwargs)
     @classmethod
     def init_random_proxy(cls):
-        proxy = random.choice(tools.proxies)
+        proxy = random.choice(utils.proxies)
         return cls(proxy=proxy)
