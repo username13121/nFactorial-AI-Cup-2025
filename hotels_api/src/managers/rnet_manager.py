@@ -1,7 +1,7 @@
 import random
 
 import rnet
-from src import tools
+from src import utils
 
 class RnetManager:
     def __init__(self, proxy: str | None = None):

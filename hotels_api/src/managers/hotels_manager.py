@@ -1,7 +1,7 @@
 import json
 import re
-import utils
-from hotels_api.src.managers.rnet_manager import RnetManager
+from src import utils
+from src.managers.rnet_manager import RnetManager
 
 
 async def get_city(search_str: str) -> tuple[int, str]:
