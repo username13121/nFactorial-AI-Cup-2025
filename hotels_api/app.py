@@ -1,7 +1,7 @@
 import uvicorn
 from fastapi import FastAPI, Query
 from typing import Dict
-from src.managers.hotels_manager import get_city, get_hotels_for_city
+from src.managers.hotels_manager import get_city, get_hotels_for_city, find_comments
 
 app = FastAPI()
 
@@ -25,6 +25,9 @@ async def find_hotels_of_city(cityId: int = Query(..., description="ID of the ci
                               ) -> list[Dict[str, object]]:
     return await get_hotels_for_city(city_code=cityId, city_name=cityName, check_in_date=checkInDate, check_out_date=checkOutDate, adults_count=adultsCount, children_count=childrenCount)
 
+@app.get("/get-comments-by-hotel")
+async def find_hotels_of_city(hotelId: int) -> list[Dict[str, object]]:
+    return await find_comments(hotelId)
 
 
 if __name__ == "__main__":
