@@ -152,38 +152,45 @@ async def get_hotels_for_city(city_code: int, city_name: str, check_in_date: str
 async def find_comments(hotel_id: int):
     rnet_client = RnetManager.init_random_proxy().rnet_client
 
-    response_json = await utils.get_response_json(
-        rnet_client.post("https://www.trip.com/restapi/soa2/28820/ctgetHotelComment", json={
-            "hotelId": int(hotel_id),
-            "pageIndex": 1,
-            "pageSize": 10,
-            "repeatComment": 1,
-            "needStaticInfo": False,
-            "functionOptions": [
-                "IntegratedTARating",
-                "hidePicAndVideoAgg",
-                "TripReviewsToServerOnline",
-                "IntegratedExpediaList",
-                "tripShuffled",
-                "taAdvisorCount",
-                "filterComment",
-                "noShowNewExpedia"
-            ],
-            "head": {
-                "platform": "PC",
-                "cver": "0",
-                "bu": "IBU",
-                "group": "trip",
-                "aid": "",
-                "sid": "",
-                "ouid": "",
-                "locale": "en-XX",
-                "timezone": "5",
-                "currency": "USD",
-                "pageId": "10320668147"
-            }
-        }))
-    return [{"comment": comment["content"], "rating": comment["rating"]} for comment in response_json["data"]["commentList"]]
+    comments = []
+    while len(comments) < 50:
+        response_json = await utils.get_response_json(
+            rnet_client.post("https://www.trip.com/restapi/soa2/28820/ctgetHotelComment", json={
+                "hotelId": int(hotel_id),
+                "pageIndex": 1,
+                "pageSize": 10,
+                "repeatComment": 1,
+                "needStaticInfo": False,
+                "functionOptions": [
+                    "IntegratedTARating",
+                    "hidePicAndVideoAgg",
+                    "TripReviewsToServerOnline",
+                    "IntegratedExpediaList",
+                    "tripShuffled",
+                    "taAdvisorCount",
+                    "filterComment",
+                    "noShowNewExpedia"
+                ],
+                "head": {
+                    "platform": "PC",
+                    "cver": "0",
+                    "bu": "IBU",
+                    "group": "trip",
+                    "aid": "",
+                    "sid": "",
+                    "ouid": "",
+                    "locale": "en-XX",
+                    "timezone": "5",
+                    "currency": "USD",
+                    "pageId": "10320668147"
+                }
+            }))
+        new_comms = [{"comment": comment["content"], "rating": comment["rating"]} for comment in response_json["data"]["commentList"]]
+        comments.extend(new_comms)
+        if len(new_comms) < 10:
+            break
+        return comments
+
 
 
 # async def book_hotel(hotel_id: str, check_in_date: str, check_out_date: str, adults_count: int, children_count: int, first_name: str, last_name: str, email: str, card_number: str, card_cvv: str, card_expiration: str):
