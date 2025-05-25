@@ -69,7 +69,7 @@ async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     
     # Initialize the language model
-    llm = ChatOpenAI(temperature=0.1, base_url="http://192.168.1.2:1234/v1", api_key="a", model="hermes-2-pro-mistral-7b")
+    llm = ChatOpenAI(temperature=0, base_url="http://192.168.1.2:1234/v1", api_key="a", model="hermes-2-pro-mistral-7b")
 
     # Create tools
     tools = [

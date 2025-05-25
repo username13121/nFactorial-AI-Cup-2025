@@ -3,3 +3,5 @@
 __pycache__/*
 __init__/*
 *.pyc
+reps
+temp.py
